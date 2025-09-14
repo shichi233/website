@@ -1,0 +1,31 @@
+def required_test_score(current_grade, test_weight, desired_grade):
+    """
+    Calculate the minimum test score needed to achieve desired_grade overall.
+
+    current_grade: current grade as a percentage (0-100)
+    test_weight: weight of the test in percentage (0-100)
+    desired_grade: target overall grade (0-100)
+    """
+    weight = test_weight / 100  # convert to decimal
+    if weight == 0:
+        return None  # test doesn't affect grade
+
+    needed_score = (desired_grade - current_grade * (1 - weight)) / weight
+    # cap between 0 and 100
+    if needed_score < 0:
+        needed_score = 0
+    elif needed_score > 100:
+        needed_score = 100
+    return needed_score
+
+
+# Example usage:
+current = float(input("Enter your current grade (e.g. 85): "))
+weight = float(input("Enter the percentage weight of the test (e.g. 30): "))
+desired = float(input("Enter your desired overall grade (e.g. 90): "))
+
+score_needed = required_test_score(current, weight, desired)
+if score_needed is None:
+    print("The test weight is zero; it won't affect your grade.")
+else:
+    print(f"You need at least {score_needed:.2f}% on the test to get {desired}% overall.")
